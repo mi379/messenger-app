@@ -1,10 +1,9 @@
-import {writable} from 'svelte/store'
-import {onDestroy} from 'svelte'
 import axios from 'axios'
+import * as store from 'svelte/store'
 
 function useFetch(address,successFn,failedFn){
 
-  var fetchProps = writable({
+  var fetchProps = store.writable({
     err:null,
     data:null,
     pending:false
@@ -79,10 +78,6 @@ function useFetch(address,successFn,failedFn){
       return 'get'
     }
   }
-
-  onDestroy(() => {
-    alert('destroyed')
-  })
 
   return [
     preFetch,

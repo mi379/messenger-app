@@ -5,7 +5,6 @@
   import Message from './pages/message/index.svelte'
   import * as Navigator from 'svelte-navigator'
 
-
   writableStore.subscribe((store) => {
     return localStorage.setItem(
       'state',JSON.stringify({

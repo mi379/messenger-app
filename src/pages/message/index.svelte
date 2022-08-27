@@ -3,12 +3,19 @@
   import writableStore from '../../storage'
   import useFetch from '../../custom_hooks/useFetch'
   import * as svelte from 'svelte'
+  import useSocketIo from '../../custom_hooks/useSocketIo'
+
 
   var _Id = $writableStore.info._id
   var location = navigator.useLocation()
   var {_id,profile} = $location.state.info
   var [_fetch,fetchProperties] = useFetch(
     'http://localhost:8000/message'
+  )
+
+  var [socketIo] = useSocketIo(
+    'http://localhost:8000',
+    {autoConnect:false}
   )
 
   svelte.onMount(() => _fetch(
