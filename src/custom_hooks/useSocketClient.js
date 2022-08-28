@@ -1,10 +1,9 @@
 import {io} from 'socket.io-client'
 import {onMount,onDestroy} from 'svelte'
 
-function useSocketIo(address,config){
-  
+export default function(address,config){
   var socketIo = io(address,config)
-
+  
   onMount(() => socketIo.connect())
 
   onDestroy(() => socketIo.close())
@@ -13,5 +12,3 @@ function useSocketIo(address,config){
     socketIo
   ]
 }
-
-export default useSocketIo
