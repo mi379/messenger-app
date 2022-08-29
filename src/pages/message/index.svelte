@@ -1,6 +1,7 @@
 <script>
   import store from '../../storage'
   import Form from './Form.svelte'
+  import onUpdate from '../../functions/onUpdate'
   import onNewMessage from '../../functions/onNewMessage'
   import clearString from '../../functions/clearString'
   import createUniqueId from '../../functions/createUniqueId'
@@ -24,6 +25,10 @@
     `${url}/message`,r => console.log(r)
   )
 
+  var [runUpdate,updateStatus] = useFetch(
+    `${url}/message`,r => console.log(r)
+  )
+
   var uniqueId = createUniqueId([
     clearString(
       _Id,
@@ -37,7 +42,19 @@
     url,config,uniqueId
   )
 
-  socketConn.on('new',(docs) => {
+  socketConn.on('new',(docs) => {   
+    var data = {
+      _id:docs._id,
+      read:true
+    }
+
+    if(docs.sender != _Id){
+      runUpdate('/new',{
+        method:'put',
+        data:data
+      })
+    }
+
     return onNewMessage(
       docs,
       _Id,
@@ -45,6 +62,15 @@
       $status,
       $status.data
     )
+  })
+
+  socketConn.on('mod',(docs) => {
+    return onUpdate([
+       ...docs,
+       status,
+       $status,
+       $status.data
+    ])
   })
 
   onMount(() => fetchAllMessage(
@@ -89,6 +115,3 @@
     Loading...
   {/if}
 {/if}
-
-
-

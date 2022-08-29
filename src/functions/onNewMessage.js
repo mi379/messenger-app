@@ -1,7 +1,13 @@
 export default function(docs,_id,status,current,data){
+
+  var _data = {
+    ...docs,
+    read:true
+  }
+
   var newData = [
     ...data,
-    docs
+    _data
   ]
 
   if(docs.sender != _id){

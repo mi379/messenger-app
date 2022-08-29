@@ -1,10 +1,9 @@
 import './app.css'
+import target from './target'
 import App from './App.svelte'
 
 export default new App({
-  target: document.getElementById(
-  	'app'
-  )
+  target
 })
 
 // export default app
