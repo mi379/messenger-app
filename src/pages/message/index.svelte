@@ -1,91 +1,94 @@
 <script>
-  import * as svelte from 'svelte'
-  import * as navigator from 'svelte-navigator'
+  import store from '../../storage'
   import Form from './Form.svelte'
-  import writableStore from '../../storage'
-  import useFetch from '../../custom_hooks/useFetch'
-  import clearString from '../../functions/clear-string'
+  import onNewMessage from '../../functions/onNewMessage'
+  import clearString from '../../functions/clearString'
   import createUniqueId from '../../functions/createUniqueId'
+  import useFetch from '../../custom_hooks/useFetch'
+  import useSocketIo from '../../custom_hooks/useSocketIo' 
+  import {useLocation} from 'svelte-navigator'
+  import {onMount} from 'svelte'
 
-  var config = {autoConnect: false}
-  var _Id = $writableStore.info._id
-  var location = navigator.useLocation()
-  var {_id,profile} = $location.state.info
-  var [_fetch,fetchProperties] = useFetch(
-    'http://localhost:8000/message'
+  var config = {autoConnect:false}
+  var url = 'http://localhost:8000'
+  var location = useLocation()
+  var state = $location.state
+  var _Id = $store.info._id
+  var _id = state.info._id
+
+  var [fetchAllMessage,status] = useFetch(
+    `${url}/message`
   )
 
-  var [fetchForSend,sendProps] = useFetch(
-    'http://localhost:8000/message'
+  var [sendMessage,sendStatus] = useFetch(
+    `${url}/message`,r => console.log(r)
   )
-
-  
-  function sendMessage(params,documentId){
-    
-    var data = {
-      _id:documentId,
-      ...params
-    }
-
-    fetchForSend('/new',{
-      method:'post',
-      data:data
-    })
-
-    fetchProperties.update(c => Object({
-      ...$fetchProperties, data : [
-        ...$fetchProperties.data,
-        data
-      ]
-    }))
-  }
 
   var uniqueId = createUniqueId([
     clearString(
-      _Id
+      _Id,
     ),
     clearString(
       _id
     )
   ])
 
-  svelte.onMount(() => _fetch(
+  var [socketConn] = useSocketIo(
+    url,config,uniqueId
+  )
+
+  socketConn.on('new',(docs) => {
+    return onNewMessage(
+      docs,
+      _Id,
+      status,
+      $status,
+      $status.data
+    )
+  })
+
+  onMount(() => fetchAllMessage(
     `/all?s=${_Id}&a=${_id}`
   ))
-
 </script>
 
-{#if $fetchProperties.pending}
+{#if $status.pending}
   Loading...
 {/if}
 
-{#if $fetchProperties.data}
-  {#each $fetchProperties.data as data}
-    {JSON.stringify(data)}
+{#if $status.data}
+  {#each $status.data as n}
+    {JSON.stringify(n)}
   {/each}
+
+  <Form
+    sender = {
+      _Id
+    }
+    accept = {
+      _id
+    }
+    status = {
+      status
+    }
+    current = {
+      $status
+    }
+    uniqueId = {
+      uniqueId
+    }
+    sendFn = {
+      sendMessage
+    }
+    data = {
+      $status.data
+    }
+  />
+
+  {#if $sendStatus.pending}
+    Loading...
+  {/if}
 {/if}
 
-{#if $fetchProperties.err}
-  {JSON.stringify(
-    $fetchProperties
-    .err
-  )}
-{/if}
 
-<Form
-
-  sender = {
-    _Id
-  }
-  accept = {
-    _id
-  }
-  uniqueId = {
-    uniqueId
-  }
-  sendMessage = {
-    sendMessage
-  }
-
-/>
 

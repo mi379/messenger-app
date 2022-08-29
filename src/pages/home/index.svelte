@@ -1,50 +1,40 @@
  <script>
-   import * as svelte from 'svelte'
    import useFetch from '../../custom_hooks/useFetch'
-   import writableStore from '../../storage'
-   import * as Navigator from 'svelte-navigator'
+   import storage from '../../storage'
+   import getUser from '../../functions/getUser'
+   import {Link} from 'svelte-navigator'
+   import {onMount} from 'svelte'
 
-   var {_id,profile} = $writableStore.info
-   var [Fetch,fetchProperties] = useFetch(
-     'http://localhost:8000/message'
+   var userId = $storage.info._id
+   var url = 'http://localhost:8000'
+
+   var [fetchLastMessage,status] = useFetch(
+     `${url}/message`
    )
 
-   function getUser(detail,info){
-   	 if(detail.sender._id == info._id){
-       return {
-       	 info: detail.accept
-       }
-   	 }
-   	 else{
-   	   return {
-         info: detail.sender
-   	   }
-   	 }
-   }
-
-   svelte.onMount(() => Fetch(
-     `/last?_id=${_id}`
+   onMount(() => fetchLastMessage(
+     `/last?_id=${userId}`
    ))
 
    
  </script>
 
 
-{#if $fetchProperties.pending}
+{#if $status.pending}
   Loading...
 {/if}
 
-{#if $fetchProperties.data}
-  {#each $fetchProperties.data as data}
-     <Navigator.Link to="/message" state={{...getUser(data,$writableStore.info)}}>
-        Message
-    </Navigator.Link>
+{#if $status.data}
+  {#each $status.data as data}
+     <Link to="/message" state={{info:getUser(data,userId)}}>
+      {data.sender.profile.firstName} :  {data.content.value}
+    </Link>
   {/each}
 {/if}
 
-{#if $fetchProperties.err}
+{#if $status.err}
   {JSON.stringify(
-  	$fetchProperties
+  	$status
   	.err
   	.message
   )}

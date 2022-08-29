@@ -5,10 +5,11 @@ export default function(params){
     (char) => parseInt(char)
   )
 
-  return stringToInt.filter(
+  var id = stringToInt.filter(
     x => x == 0 || x > 0
   )
-  .join(
+
+  return id.join(
     ""
   )
 }

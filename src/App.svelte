@@ -3,7 +3,7 @@
   import Home from './pages/home/index.svelte'
   import Login from './pages/login/index.svelte'
   import Message from './pages/message/index.svelte'
-  import * as Navigator from 'svelte-navigator'
+  import {Router,Route} from 'svelte-navigator'
 
   writableStore.subscribe((store) => {
     return localStorage.setItem(
@@ -12,29 +12,28 @@
       })
     )
   })
+  
 </script>
 
 {#if $writableStore.login}
-  <Navigator.Router>
-    <Navigator.Route path="/">
+  <Router>
+    <Route path="/">
       <Home />
-    </Navigator.Route>
-    <Navigator.Route path="/message">
+    </Route>
+    <Route path="/message">
       <Message />
-    </Navigator.Route>
-    <Navigator.Route path="**">
-      404: Not found
-    </Navigator.Route>
-  </Navigator.Router>
+    </Route>
+    <Route path="**">
+      Not found
+    </Route>
+  </Router>
 {/if}
 
 {#if !$writableStore.login}
-  <Navigator.Router>
-    <Navigator.Route path="/">
-      <Login 
-        message="login first..."
-      />
-    </Navigator.Route>
-  </Navigator.Router>
+  <Router>
+    <Route path="/">
+      <Login />
+    </Route>
+  </Router>
 {/if}
 

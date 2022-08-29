@@ -1,35 +1,21 @@
 <script>
+  import store from '../../storage'
+  import signedIn from '../../functions/onSignedIn'
   import useFetch from '../../custom_hooks/useFetch'
-  import writableStore from '../../storage'
 
-  var data = {username:'',password:''}
+  var data = {username:'', password: ''}
 
-  var [_fetch,properties] = useFetch(
+  $ : cfg = {method: 'post', data: data}
+
+  var [submit,submitStatus] = useFetch(
     'http://localhost:8000/signIn',
-    (result) => _onSignedIn(result)
+    (info) => signedIn(info,$store)
   )
 
-  function _onSignedIn(userInfo){
-    return writableStore.set({
-      ...$writableStore,
-      info:userInfo,
-      login:true,
-    })
-  }
-
-  function onSubmit(method){
-    return _fetch('/',{
-      method,data
-    })
-  }
-
-
-
- 
 </script>
 
 
-<form on:submit|preventDefault={() => onSubmit('post')}>
+<form on:submit|preventDefault={() => submit('/',cfg)}>
   <input 
     type="text"
     placeholder="username...."
@@ -44,7 +30,7 @@
     submit
   </button>
 
-  {#if $properties.pending}
+  {#if $submitStatus.pending}
     Loading...
   {/if}
   
