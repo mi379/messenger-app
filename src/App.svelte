@@ -1,4 +1,5 @@
 <script>
+  import style from './app.css'
   import writableStore from './storage'
   import Home from './pages/home/index.svelte'
   import Login from './pages/login/index.svelte'

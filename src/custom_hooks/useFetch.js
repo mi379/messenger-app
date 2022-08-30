@@ -12,7 +12,8 @@ function useFetch(address,successFn,failedFn){
   function preFetch(path,requestObject){
     fetchProps.update((current) => {
       return {
-        ...current,
+        err:null,
+        data:null,
         pending:true
       }
     })

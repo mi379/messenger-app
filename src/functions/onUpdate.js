@@ -5,12 +5,12 @@ export default function([_id,field,status,current,data]){
   	return doc._id == _id
   })
 
-  var indexOfDoc = newData.findIndex(
+  var _index = newData.findIndex(
     Doc => Doc == doc
   )
 
 
-  newData[indexOfDoc] = {
+  newData[_index] = {
   	...doc,...field
   }
 

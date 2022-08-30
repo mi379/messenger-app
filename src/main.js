@@ -1,4 +1,4 @@
-import './app.css'
+import style from './app.css'
 import target from './target'
 import App from './App.svelte'
 

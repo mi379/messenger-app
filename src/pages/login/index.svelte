@@ -20,11 +20,13 @@
     type="text"
     placeholder="username...."
     bind:value={data.username}
+    class="border-black" 
   />
   <input 
     type="password"
     placeholder="password...."
     bind:value={data.password}
+    class="p-3"
   />
   <button type="submit">
     submit
