@@ -1,9 +1,9 @@
 <script> 
   import searchValidator from '../../functions/searchValidator' 
  
-  export let searchByFirstName,keyword,props
+  export let searchByFirstName,keyword,props,userId
 
-  $ : query = `/search?query=${keyword}`
+  $ : query = `/search?query=${keyword}&id=${userId}`
   
   $ : keyword, searchValidator(
     searchByFirstName,

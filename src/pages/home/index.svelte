@@ -26,13 +26,12 @@
 </script>
 
 <div class="absolute h-full w-full flex flex-col">
-  {#if $status.pending || $props.pending}
-    <Preloader />
-  {/if}
-
   <Search
     searchByFirstName = {
       searchByFirstName
+    }
+    userId = {
+      userId
     }
     keyword = {
       ''
@@ -41,6 +40,12 @@
       props
     }
   />
+
+  {#if $status.pending || $props.pending}
+    <Preloader />
+  {/if}
+
+  
 
   {#if $status.data && (!$props.data || $props.pending)}
     {#each $status.data as data}
@@ -77,8 +82,10 @@
   {/if}
 
   {#if $props.data && $props.data.length > 0}
-    {#each $status.data as data}
-      {JSON.stringify(data)}
+    {#each $props.data as data}
+      <Link to="/message" state={{info:data}}>
+        {data.profile.firstName}
+      </Link>
     {/each}
   {/if}
 </div>
