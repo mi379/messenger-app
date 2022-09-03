@@ -1,3 +1,17 @@
+<script>
+  import {Router,Route} from 'svelte-navigator'
+</script>
+
+<Router>
+  <Route path="/">
+    Home
+  </Route>
+  <Route path="/about">
+    About
+  </Route>
+</Router>
+
+
 <!-- <script>
   import useSocketIo from './custom_hooks/useSocketIo'
 
