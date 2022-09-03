@@ -21,7 +21,7 @@
   })
 </script> -->
 
-Test mode
+Test  Edit Mode
 
 <!-- <script>
   import style from './app.css'
