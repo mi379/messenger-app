@@ -6,7 +6,7 @@
   <Route path="/">
     Home
   </Route>
-  <Route path="about">
+  <Route path="/about">
     About
   </Route>
 </Router>
