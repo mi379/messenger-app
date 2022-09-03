@@ -6,7 +6,7 @@
   <Route path="/">
     Home
   </Route>
-  <Route path="/about">
+  <Route path="about">
     About
   </Route>
 </Router>
@@ -35,7 +35,6 @@
   })
 </script> -->
 
-Test  Edit Mode
 
 <!-- <script>
   import style from './app.css'
