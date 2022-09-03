@@ -1,10 +1,12 @@
 <script>
-  import {Router,Route} from 'svelte-navigator'
+  import {Router,Route,Lin} from 'svelte-navigator'
 </script>
 
 <Router>
   <Route path="/">
-    Home
+    <Link to="/about">
+      About
+    </Link>
   </Route>
   <Route path="/about">
     About
