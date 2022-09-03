@@ -4,9 +4,9 @@
 
 <Router>
   <Route path="/">
-    <Link to="/about">
+    <a href="/about">
       About
-    </Link>
+    </a>
   </Route>
   <Route path="/about">
     About
