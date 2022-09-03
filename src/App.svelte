@@ -4,10 +4,10 @@
 
 <Router>
   <Route path="/">
-    Home
+    Home Page
   </Route>
   <Route path="/about">
-    About
+    About Page
   </Route>
 </Router>
 
