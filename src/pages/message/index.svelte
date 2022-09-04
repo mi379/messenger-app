@@ -45,7 +45,7 @@
     `${url}.herokuapp.com`,config,uniqueId
   )
 
-  socketConn.on('new',(docs) => {   
+  socketConn.on('insert',(docs) => {   
     var data = {
       _id:docs._id,
       read:true
@@ -67,7 +67,7 @@
     )
   })
 
-  socketConn.on('mod',(docs) => {
+  socketConn.on('update',(docs) => {
     return onUpdate([
        ...docs,
        status,
