@@ -17,16 +17,19 @@
   var _Id = $store.info._id
   var _id = state.info._id
 
+  var url = 'https://heroku-messenger-api'
   var [fetchAllMessage,status] = useFetch(
-    `${url}/message`
+    `${url}.herokuapp.com/message`
   )
 
   var [sendMessage,sendStatus] = useFetch(
-    `${url}/message`,r => console.log(r)
+    `${url}.herokuapp.com/message`,
+    (result) => console.log(result)
   )
 
   var [runUpdate,updateStatus] = useFetch(
-    `${url}/message`,r => console.log(r)
+    `${url}.herokuapp.com/message`,
+    (result) => console.log(result)
   )
 
   var uniqueId = createUniqueId([
