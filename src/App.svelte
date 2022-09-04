@@ -9,7 +9,7 @@
     </Link>
   </Route>
   <Route path="/about">
-     <Link to="/about">
+     <Link to="/">
       Home page
     </Link>
   </Route>
