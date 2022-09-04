@@ -1,6 +1,4 @@
-Home page
-
-<!-- <script>
+<script>
   import Preloader from '../../components/Preloader.svelte'
   import Search from './Search.svelte'
   import useFetch from '../../custom_hooks/useFetch'
@@ -10,14 +8,16 @@ Home page
   import {onMount} from 'svelte'
 
   var userId = $storage.info._id
-  var url = 'http://localhost:8000'
+  var url = 'https://heroku-messenger-api'
 
   var [fetchLastMessage,status] = useFetch(
-    `${url}/message`,r => console.log(r)
+    `${url}.herokuapp.com/message`,
+    (result) => console.log(result)
   )
 
   var [searchByFirstName,props] = useFetch(
-    `${url}/user`,r => console.log(r)
+    `${url}.herokuapp.com/user`,
+    (result) => console.log(result)
   )
 
   onMount(() => fetchLastMessage(
@@ -92,4 +92,3 @@ Home page
   {/if}
 </div>
 
- -->
