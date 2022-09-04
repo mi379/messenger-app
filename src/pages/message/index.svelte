@@ -42,7 +42,7 @@
   ])
 
   var [socketConn] = useSocketIo(
-    url,config,uniqueId
+    `${url}.herokuapp.com`,config,uniqueId
   )
 
   socketConn.on('new',(docs) => {   
