@@ -1,14 +1,21 @@
 <script>
-  var counter = 0
-
-  function increment(){
-    counter += 1
-  }
+  import {Router,Route,Link} from 'svelte-navigator'
 </script>
 
-<button on:click={increment}>
-  {counter}
-</button>
+<Router>
+  <Route path="/">
+    <Link to="/about">
+      About page
+    </Link>
+  </Route>
+  <Route path="/about">
+     <Link to="/about">
+      Home page
+    </Link>
+  </Route>
+</Router>
+
+
 
 <!-- <script>
   import useSocketIo from './custom_hooks/useSocketIo'
