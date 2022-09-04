@@ -7,8 +7,9 @@
 
   $ : cfg = {method: 'post', data: data}
 
+  var url = 'https://heroku-messenger-'
   var [submit,submitStatus] = useFetch(
-    'http://localhost:8000/signIn',
+    `${url}api.herokuapp.com/signin`,
     (info) => signedIn(info,$store)
   )
 

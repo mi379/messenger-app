@@ -1,4 +1,6 @@
-<script>
+Home page
+
+<!-- <script>
   import Preloader from '../../components/Preloader.svelte'
   import Search from './Search.svelte'
   import useFetch from '../../custom_hooks/useFetch'
@@ -90,3 +92,4 @@
   {/if}
 </div>
 
+ -->
