@@ -1,19 +1,30 @@
 <script>
   import {Router,Route,Link} from 'svelte-navigator'
+  import {writable} from 'svelte/store'
+
+  var verified = writable(false)
 </script>
 
-<Router>
-  <Route path="/">
-    <Link to="/about">
-      About page
-    </Link>
-  </Route>
-  <Route path="/about">
-     <Link to="/">
-      Home page
-    </Link>
-  </Route>
-</Router>
+{#if !$verified}
+  <Router>
+    <Route path="/">
+      <button on:click={() => verified.set(true)}>
+        Login
+      </button>
+    </Route>
+  </Router>
+{/if}
+
+{#if $verified}
+  <Router>
+    <Route path="/">
+      <button on:click={() => verified.set(false)}>
+        Logout
+      </button>
+    </Route>
+  </Router>
+{/if}
+
 
 
 
