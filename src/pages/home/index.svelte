@@ -8,16 +8,14 @@
   import {onMount} from 'svelte'
 
   var userId = $storage.info._id
-  var url = 'https://heroku-messenger-api'
+  var url = import.meta.env.VITE_API_URL
 
   var [fetchLastMessage,status] = useFetch(
-    `${url}.herokuapp.com/message`,
-    (result) => console.log(result)
+    `${url}/message`,r => console.log(r)
   )
 
   var [searchByFirstName,props] = useFetch(
-    `${url}.herokuapp.com/user`,
-    (result) => console.log(result)
+    `${url}/user`,r => console.log(r)
   )
 
   onMount(() => fetchLastMessage(
@@ -28,19 +26,9 @@
 </script>
 
 <div class="absolute h-full w-full flex flex-col">
-  <Search
-    searchByFirstName = {
-      searchByFirstName
-    }
-    userId = {
-      userId
-    }
-    keyword = {
-      ''
-    }
-    props = {
-      props
-    }
+  <img 
+    class="circle mt-3 ml-3 h-24 w-24"
+    src="xnxx.com/search/aimi"
   />
 
   {#if $status.pending || $props.pending}
@@ -86,7 +74,9 @@
   {#if $props.data && $props.data.length > 0}
     {#each $props.data as data}
       <Link to="/message" state={{info:data}}>
-        {data.profile.firstName}
+        <img 
+          src = {data.profile.picture} 
+        />
       </Link>
     {/each}
   {/if}

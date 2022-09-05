@@ -7,10 +7,15 @@
 
   $ : cfg = {method: 'post', data: data}
 
-  var url = 'https://heroku-messenger-'
+  var url = import.meta.env.VITE_API_URL
+  
   var [submit,submitStatus] = useFetch(
-    `${url}api.herokuapp.com/signin`,
-    (info) => signedIn(info,$store)
+    `${url}/signin`,
+    info => signedIn(info,$store)
+  )
+
+  console.log(
+    import.meta.env
   )
 
 </script>
