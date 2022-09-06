@@ -11,25 +11,22 @@
   import {onMount} from 'svelte'
 
   var config = {autoConnect:false}
-  var url = 'http://localhost:8000'
   var location = useLocation()
   var state = $location.state
   var _Id = $store.info._id
   var _id = state.info._id
 
-  var url = 'https://heroku-messenger-api'
+  var url = import.meta.env.VITE_API_URL
   var [fetchAllMessage,status] = useFetch(
-    `${url}.herokuapp.com/message`
+    `${url}/message`,r => console.log(r)
   )
 
   var [sendMessage,sendStatus] = useFetch(
-    `${url}.herokuapp.com/message`,
-    (result) => console.log(result)
+    `${url}/message`,r => console.log(r)
   )
 
   var [runUpdate,updateStatus] = useFetch(
-    `${url}.herokuapp.com/message`,
-    (result) => console.log(result)
+    `${url}/message`,r => console.log(r)
   )
 
   var uniqueId = createUniqueId([

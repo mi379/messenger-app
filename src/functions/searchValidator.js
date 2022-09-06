@@ -1,4 +1,4 @@
-export default function(fn,params,query,props){
+export default function(fn,query,props,params){
   if(params.length < 1){
   	return reset(
       props

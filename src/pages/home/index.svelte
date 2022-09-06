@@ -1,12 +1,16 @@
 <script>
-  import Preloader from '../../components/Preloader.svelte'
+  import User from './User.svelte'
   import Search from './Search.svelte'
+  import Navbar from './Navbar.svelte'
+  import Message from './Message.svelte'
+  import Preloader from '../../components/Preloader.svelte'
   import useFetch from '../../custom_hooks/useFetch'
   import storage from '../../storage'
   import getUser from '../../functions/getUser'
   import {Link} from 'svelte-navigator'
   import {onMount} from 'svelte'
 
+  var searchKeyword = ''
   var userId = $storage.info._id
   var url = import.meta.env.VITE_API_URL
 
@@ -22,14 +26,19 @@
     `/last?_id=${userId}`
   ))
 
-   
+
 </script>
 
-<div class="absolute h-full w-full flex flex-col">
-  <img 
-    class="circle mt-3 ml-3 h-24 w-24"
-    src="xnxx.com/search/aimi"
-  />
+<div class="absolute h-full w-full flex flex-col overflow-scroll">
+  <Navbar profile={$storage.info.profile}>
+    <Search 
+      {searchByFirstName}
+      {searchKeyword}
+      {userId}
+      {props}    
+    />
+  </Navbar>
+  
 
   {#if $status.pending || $props.pending}
     <Preloader />
@@ -38,13 +47,16 @@
   
 
   {#if $status.data && (!$props.data || $props.pending)}
-    {#each $status.data as data}
-      <div>
+    <div class="flex-1">
+      {#each $status.data as data}
         <Link to="/message" state={{info:getUser(data,userId)}}>
-          {data.sender.profile.firstName} :  {data.content.value}
+          <Message 
+            {data} 
+            {userId}
+          />
         </Link>
-      </div>
-    {/each}
+      {/each}
+    </div>
   {/if}
 
   {#if $status.err}
@@ -74,9 +86,7 @@
   {#if $props.data && $props.data.length > 0}
     {#each $props.data as data}
       <Link to="/message" state={{info:data}}>
-        <img 
-          src = {data.profile.picture} 
-        />
+        <User {data} />
       </Link>
     {/each}
   {/if}
