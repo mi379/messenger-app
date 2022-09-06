@@ -44,9 +44,7 @@
     <Preloader />
   {/if}
 
-  
-
-  {#if $status.data && (!$props.data || $props.pending)}
+  {#if $status.data && (!$props.data && !$props.pending)}
     <div class="flex-1">
       {#each $status.data as data}
         <Link to="/message" state={{info:getUser(data,userId)}}>
