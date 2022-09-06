@@ -39,7 +39,7 @@
   ])
 
   var [socketConn] = useSocketIo(
-    `${url}.herokuapp.com`,config,uniqueId
+    url,config,uniqueId
   )
 
   socketConn.on('insert',(docs) => {   
